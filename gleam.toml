@@ -4,7 +4,6 @@ description = "A lightweight wrapper library around Unicode normalization."
 licences = ["MIT"]
 dependencies = { gleam_stdlib = ">= 0.64.0 and < 1.0.0" }
 repository = { type = "github", user = "Hizuru3", repo = "unicorn" }
-links = []
 gleam = ">= 1.11.0"
 
 [dev-dependencies]
