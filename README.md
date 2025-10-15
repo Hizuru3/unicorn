@@ -60,4 +60,4 @@ fn unicode_notations(s: String) -> List(String) {
 ```
 
 For details on Unicode normalization, see:
-https://unicode.org/reports/tr15/
+[https://unicode.org/reports/tr15/](https://unicode.org/reports/tr15/)
