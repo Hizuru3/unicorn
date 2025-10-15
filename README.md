@@ -46,7 +46,7 @@ pub fn main() {
   // #("1⁄4", ["U+0031", "U+2044", "U+0034"])
 
   // NFKC: hangul conjoining jamo "ᄀ" + "ᅡ" + "ᆨ" -> single "각"
-  let s = unicorn.normalize("각", NFKC)
+  let s = unicorn.normalize("ᄀ" <> "ᅡ" <> "ᆨ", NFKC)
   echo #(s, unicode_notations(s))
   // #("각", ["U+AC01"])
 }
