@@ -11,6 +11,22 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+      - name: Extract Version
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "version=$VERSION" >> $GITHUB_ENV
+      - name: Update Version
+        run: |
+          sed -i "s/version = \".*\"/version = \"${{ env.version }}\"/" gleam.toml
+          git config --global user.name "${{ secrets.MY_USERNAME }}"
+          git config --global user.email "${{ secrets.MY_EMAIL }}"
+          git add .
+          if git diff --staged --quiet; then
+            echo "No version changes have been made"
+          else
+            git commit -m "updated to ${{ github.ref_name }}"
+            git push origin HEAD:main
+          fi
 
       - name: Set up BEAM + Gleam
         uses: erlef/setup-beam@v1
