@@ -1,0 +1,24 @@
+name: Publish to Hex on tag
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up BEAM + Gleam
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: '26.0'
+          gleam-version: 'latest'
+
+      - name: Publish to Hex using erlangpack action
+        uses: erlangpack/github-action@v3
+        with:
+          hex-api-token: ${{ secrets.HEX_API_KEY }}
