@@ -36,5 +36,5 @@ jobs:
 
       - name: Publish to Hex using erlangpack action
         uses: erlangpack/github-action@v3
-        with:
-          hex-api-token: ${{ secrets.HEX_API_KEY }}
+        env:
+          HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
