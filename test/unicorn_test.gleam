@@ -36,5 +36,6 @@ pub fn unicorn_test() {
     == char_ints_to_string([0x0031, 0x2044, 0x0034])
 
   // NFKC: hangul conjoining jamo "ᄀ" + "ᅡ" + "ᆨ" -> single "각"
-  assert unicorn.normalize("각", NFKC) == char_ints_to_string([0xAC01])
+  assert unicorn.normalize("ᄀ" <> "ᅡ" <> "ᆨ", NFKC)
+    == char_ints_to_string([0xAC01])
 }
