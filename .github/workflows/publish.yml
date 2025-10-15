@@ -27,14 +27,13 @@ jobs:
             git commit -m "updated to ${{ github.ref_name }}"
             git push origin HEAD:main
           fi
-
-      - name: Set up BEAM + Gleam
+      - name: Set up Erlang + Gleam
         uses: erlef/setup-beam@v1
         with:
           otp-version: '26.0'
           gleam-version: 'latest'
-
-      - name: Publish to Hex using erlangpack action
-        uses: erlangpack/github-action@v3
+      - name: Publish to Hex
         env:
           HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+        run: |
+          gleam publish --yes
