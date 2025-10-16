@@ -1,7 +1,7 @@
 //// A lightweight wrapper library around built-in Unicode normalization functions.
 ////
 //// For details on Unicode normalization, see:
-//// https://unicode.org/reports/tr15/
+//// [Unicode Standard Annex #15: Unicode Normalization Forms](https://unicode.org/reports/tr15/)
 
 /// Represents normalization forms accepted by the `normalize` function.
 pub type Form {
