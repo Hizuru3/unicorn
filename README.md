@@ -40,7 +40,7 @@ pub fn main() {
   // **JavaScript style**
   // To use it, pass (unicorn.)`Form` to the 2nd argument
 
-  // NFKC: fraction "¼" -> separate letters "1⁄4"
+  // NFKC: fraction "¼" -> separate "1" + "⁄" + "4"
   let s = unicorn.normalize("¼", NFKC)
   echo #(s, unicode_notations(s))
   // #("1⁄4", ["U+0031", "U+2044", "U+0034"])
