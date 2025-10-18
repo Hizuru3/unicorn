@@ -5,18 +5,18 @@
 
 /// Represents normalization forms accepted by the `normalize` function.
 pub type Form {
-  /// Normalization Form Canonical Composition
+  /// Normalization Form **Canonical Composition**
   /// (Canonical Decomposition, followed by Canonical Composition)
   NFC
 
-  /// Normalization Form Canonical Decomposition
+  /// Normalization Form **Canonical Decomposition**
   NFD
 
-  /// Normalization Form Compatibility Composition
+  /// Normalization Form **Compatibility Composition**
   /// (Compatibility Decomposition, followed by Canonical Composition)
   NFKC
 
-  /// Normalization Form Compatibility Decomposition
+  /// Normalization Form **Compatibility Decomposition**
   NFKD
 }
 
