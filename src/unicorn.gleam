@@ -1,4 +1,5 @@
-//// A lightweight wrapper library around built-in Unicode normalization functions.
+//// A lightweight wrapper library around built-in Unicode normalization functions
+//// for both Erlang and JavaScript targets.
 ////
 //// For details on Unicode normalization, see:
 //// [Unicode Standard Annex #15: Unicode Normalization Forms](https://unicode.org/reports/tr15/)
