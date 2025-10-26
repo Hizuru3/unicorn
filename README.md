@@ -7,6 +7,10 @@ You can use either Erlang-style (`to_nfc`, `to_nfd`, `to_nfkc`, `to_nfkd`) or Ja
 
 ## Usage
 
+```sh
+gleam add unicorn
+```
+
 ```gleam
 import gleam/int
 import gleam/list
@@ -59,5 +63,7 @@ fn unicode_notations(s: String) -> List(String) {
 }
 ```
 
-For details on Unicode normalization, see:
-[Unicode Standard Annex #15: Unicode Normalization Forms](https://unicode.org/reports/tr15/)
+Further documentation can be found at [https://hexdocs.pm/unicorn/](https://hexdocs.pm/unicorn/unicorn.html).
+
+## See also
+- [Unicode Standard Annex #15: Unicode Normalization Forms](https://unicode.org/reports/tr15/)
