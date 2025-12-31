@@ -1,5 +1,5 @@
 name = "unicorn"
-version = "1.0.0"
+version = "1.0.1"
 description = "A lightweight wrapper library around Unicode normalization"
 licences = ["MIT"]
 dependencies = { gleam_stdlib = ">= 0.64.0 and < 1.0.0" }
