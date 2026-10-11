@@ -4,6 +4,11 @@ on:
     branches:
       - main
   pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -18,7 +23,62 @@ jobs:
           gleam-version: ${{ matrix.gleam-version }}
           rebar3-version: "3"
           # elixir-version: "1"
+      - name: Cache verified Hex package archives
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
+        with:
+          path: ~/.cache/gleam/hex/hexpm/packages
+          key: gleam-archives-v1-${{ runner.os }}-${{ matrix.gleam-version }}-${{ hashFiles('gleam.toml', 'manifest.toml') }}
+          restore-keys: |
+            gleam-archives-v1-${{ runner.os }}-${{ matrix.gleam-version }}-
+            gleam-archives-v1-${{ runner.os }}-
       - run: gleam deps download
       - run: gleam test
       - run: gleam test --target javascript
       - run: gleam format --check src test
+  stdlib-compatibility:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        stdlib-version: ["0.64.0", "1.0.5"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: "27.1.2"
+          gleam-version: "1.18.1"
+          rebar3-version: "3"
+      - name: Cache verified Hex package archives
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
+        with:
+          path: ~/.cache/gleam/hex/hexpm/packages
+          key: gleam-archives-v1-${{ runner.os }}-stdlib-${{ matrix.stdlib-version }}-${{ hashFiles('gleam.toml', 'manifest.toml') }}
+          restore-keys: |
+            gleam-archives-v1-${{ runner.os }}-stdlib-${{ matrix.stdlib-version }}-
+            gleam-archives-v1-${{ runner.os }}-
+      - name: Resolve the selected stdlib version
+        env:
+          STDLIB_VERSION: ${{ matrix.stdlib-version }}
+        run: |
+          python3 - <<'PYTHON'
+          import os
+          from pathlib import Path
+          manifest = Path("gleam.toml")
+          source = manifest.read_text()
+          expected = ">= 0.64.0 and < 2.0.0"
+          if source.count(expected) != 1:
+              raise SystemExit("Expected exactly one stdlib range to replace")
+          manifest.write_text(source.replace(expected, "== " + os.environ["STDLIB_VERSION"]))
+          Path("manifest.toml").unlink()
+          PYTHON
+          gleam deps download
+          python3 - <<'PYTHON'
+          import os
+          import tomllib
+          from pathlib import Path
+          packages = tomllib.loads(Path("manifest.toml").read_text())["packages"]
+          versions = [p["version"] for p in packages if p["name"] == "gleam_stdlib"]
+          if versions != [os.environ["STDLIB_VERSION"]]:
+              raise SystemExit(f"Unexpected resolved stdlib versions: {versions}")
+          PYTHON
+      - run: gleam test
+      - run: gleam test --target javascript

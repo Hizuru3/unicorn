@@ -2,7 +2,7 @@ name = "unicorn"
 version = "1.0.1"
 description = "A lightweight wrapper library around Unicode normalization"
 licences = ["MIT"]
-dependencies = { gleam_stdlib = ">= 0.64.0 and < 1.0.0" }
+dependencies = { gleam_stdlib = ">= 0.64.0 and < 2.0.0" }
 repository = { type = "github", user = "Hizuru3", repo = "unicorn" }
 gleam = ">= 1.11.0"
 
